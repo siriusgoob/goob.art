@@ -1,8 +1,19 @@
 import { Box, Container, Typography, useTheme } from "@mui/material";
+import { readAboutText } from "../utils/firebase";
+import { useEffect, useState } from "react";
 import backgroundCover from "../assets/images/goob_background.webp";
 
 function AboutPage() {
   const theme = useTheme();
+  const [paragraphs, setParagraphs] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchParagraphs = async () => {
+      const data = await readAboutText();
+      setParagraphs(data);
+    };
+    fetchParagraphs();
+  }, []);
 
   return (
     <Container
@@ -42,20 +53,12 @@ function AboutPage() {
           >
             About
           </Typography>
-          <Typography sx={{ paddingY: 4 }} variant="body1">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            ac ligula nec eros finibus pretium in non nisl. In sit amet nisl eu
-            metus tempor aliquet. Nam sodales, eros pretium auctor aliquet,
-            velit quam commodo dui, ornare ultrices odio nunc et mi. Aliquam
-            pharetra ultricies augue, at elementum diam vulputate vel. Aliquam
-            non sodales nibh. Fusce tincidunt auctor lectus, sit amet feugiat
-            enim dictum sed. Sed a elementum nunc, vel suscipit ipsum. Sed
-            pharetra interdum metus id auctor.
-          </Typography>
-          <Typography sx={{ paddingY: 4 }} variant="body1">
-            Ut viverra faucibus orci, sit amet eleifend urna. Aliquam leo justo,
-            rutrum accumsan luctus nec, tempor imperdiet tortor.
-          </Typography>
+          {paragraphs &&
+            paragraphs.map((text: string, index: number) => (
+              <Typography key={index} sx={{ pt: 4 }} variant="body1">
+                {text}
+              </Typography>
+            ))}
         </Box>
       </Box>
     </Container>
