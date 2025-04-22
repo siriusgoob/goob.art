@@ -52,7 +52,7 @@ const typography: TypographyVariantsOptions = {
     fontFamily: "Century Gothic Paneuropean",
     fontSize: "12px",
     fontWeight: 300,
-    letterSpacing: "3px",
+    letterSpacing: "2px",
     textTransform: "uppercase",
   },
   h1: {

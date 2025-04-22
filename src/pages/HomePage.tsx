@@ -1,11 +1,10 @@
-import { Box, Button, Container, Typography, useTheme } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
+import Button from "../components/Button";
 import backgroundCover from "../assets/images/goob_background.webp";
 import logoGlow from "../assets/images/sg_logo_glow.webp";
-import blusky from "../assets/images/blusky.svg";
+import bluesky from "../assets/images/blusky.svg";
 
 function HomePage() {
-  const theme = useTheme();
-
   return (
     <Container
       maxWidth={false}
@@ -36,29 +35,10 @@ function HomePage() {
           metus tempor.
         </Typography>
         <Button
-          disableRipple
-          disableFocusRipple
-          disableTouchRipple
           href="https://bsky.app/profile/goob.art"
-          rel="noopener noreferrer"
-          sx={{
-            backgroundColor: "transparent",
-            border: `4px solid ${theme.palette.text.primary}`,
-            borderRadius: "10px",
-            boxShadow: `0 0 10px ${theme.palette.text.secondary}`,
-            transition: "box-shadow 0.1s ease-in-out",
-            "&:hover": {
-              backgroundColor: "transparent",
-              boxShadow: `0 0 20px ${theme.palette.text.secondary}`,
-            },
-          }}
-          target="_blank"
-        >
-          <Box component="img" height="30px" src={blusky} sx={{ pr: 2 }} />
-          <Typography sx={{ color: theme.palette.text.primary }}>
-            BluSky
-          </Typography>
-        </Button>
+          icon={bluesky}
+          text="BlueSky"
+        />
       </Box>
     </Container>
   );
