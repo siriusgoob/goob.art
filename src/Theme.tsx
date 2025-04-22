@@ -28,6 +28,13 @@ declare module "@mui/material/styles" {
   }
 }
 
+declare module '@mui/material/Typography' {
+  interface TypographyPropsVariantOverrides {
+    copyright: true;
+    navbar: true;
+  }
+}
+
 const typography: TypographyVariantsOptions = {
   body1: {
     fontFamily: "Century Gothic Paneuropean",
