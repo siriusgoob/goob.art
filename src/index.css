@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Spray+Paint&display=swap');
+
+@font-face {
+  font-family: 'Century Gothic Paneuropean';
+  src: url('./assets/fonts/CenturyGothicPaneuropeanThin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Century Gothic Paneuropean';
+  src: url('./assets/fonts/CenturyGothicPaneuropeanThinItalic.ttf') format('truetype');
+  font-weight: 100;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Century Gothic Paneuropean';
+  src: url('./assets/fonts/CenturyGothicPaneuropeanLight.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Century Gothic Paneuropean';
+  src: url('./assets/fonts/CenturyGothicPaneuropeanLightItalic.ttf') format('truetype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Century Gothic Paneuropean';
+  src: url('./assets/fonts/CenturyGothicPaneuropeanRegular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Century Gothic Paneuropean';
+  src: url('./assets/fonts/CenturyGothicPaneuropeanItalic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Century Gothic Paneuropean';
+  src: url('./assets/fonts/CenturyGothicPaneuropeanSemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Century Gothic Paneuropean';
+  src: url('./assets/fonts/CenturyGothicPaneuropeanSemiBoldItalic.ttf') format('truetype');
+  font-weight: 600;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Century Gothic Paneuropean';
+  src: url('./assets/fonts/CenturyGothicPaneuropeanBold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Century Gothic Paneuropean';
+  src: url('./assets/fonts/CenturyGothicPaneuropeanBoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Century Gothic Paneuropean';
+  src: url('./assets/fonts/CenturyGothicPaneuropeanBlack.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Century Gothic Paneuropean';
+  src: url('./assets/fonts/CenturyGothicPaneuropeanBlackItalic.ttf') format('truetype');
+  font-weight: 900;
+  font-style: italic;
+}
+
+:root {
+  font-family: "Century Gothic Paneuropean";
+  font-weight: 400;
+
+  color-scheme: light dark;
+
+  overflow-x: hidden;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 10rem;
+  border: 1px solid #fbeae7;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track-piece:start {
+  background: transparent;
+}
+
+::-webkit-scrollbar-track-piece:end {
+  background: transparent;
+}
