@@ -5,7 +5,6 @@ import HomePage from "./pages/HomePage";
 import ArtPage from "./pages/ArtPage";
 import AboutPage from "./pages/AboutPage";
 import Navbar from "./components/Navbar";
-import Copyright from "./components/Copyright";
 
 function App() {
 
@@ -14,7 +13,6 @@ function App() {
       <CssBaseline />
       <BrowserRouter>
         <Navbar />
-        <Copyright />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/projects" element={<HomePage />} />

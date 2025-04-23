@@ -1,5 +1,6 @@
 import { Box, Container, Typography } from "@mui/material";
 import Button from "../components/Button";
+import Copyright from "../components/Copyright";
 import backgroundCover from "../assets/images/goob_background.webp";
 import logoGlow from "../assets/images/sg_logo_glow.webp";
 import bluesky from "../assets/images/blusky.svg";
@@ -40,6 +41,7 @@ function HomePage() {
           text="BlueSky"
         />
       </Box>
+      <Copyright />
     </Container>
   );
 }

@@ -1,6 +1,38 @@
-import { Box, useTheme } from "@mui/material";
-import NavbarLink from "./NavbarLink";
-import { useNavigate } from "react-router-dom";
+import { Box, Typography, useTheme } from "@mui/material";
+import { NavLink, useNavigate } from "react-router-dom";
+
+interface NavbarLinkProps {
+  text: string;
+  to: string;
+}
+
+function NavbarLink({ text, to }: NavbarLinkProps) {
+  const theme = useTheme();
+
+  return (
+    <NavLink
+      style={({ isActive }) => ({
+        color: isActive ? theme.palette.text.secondary : theme.palette.text.primary,
+        paddingRight: "50px",
+        textDecoration: "none",
+      })}
+      to={to}
+    >
+      <Typography
+        sx={{
+          textShadow: `0 0 10px ${theme.palette.text.secondary}`,
+          transition: "text-shadow 0.1s ease-in-out",
+          "&:hover": {
+            textShadow: `0 0 20px ${theme.palette.text.secondary}`,
+          },
+        }}
+        variant="navbar"
+      >
+        {text}
+      </Typography>
+    </NavLink>
+  );
+}
 
 function Navbar() {
   const theme = useTheme();

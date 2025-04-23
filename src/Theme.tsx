@@ -70,8 +70,8 @@ const typography: TypographyVariantsOptions = {
   },
   h3: {
     fontFamily: "Century Gothic Paneuropean",
-    fontSize: "28px",
-    letterSpacing: "25px",
+    fontSize: "22px",
+    letterSpacing: "12px",
   },
   navbar: {
     fontFamily: "Century Gothic Paneuropean",

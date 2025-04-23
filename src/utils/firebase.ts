@@ -1,5 +1,18 @@
 import { initializeApp } from "firebase/app";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+} from "firebase/firestore";
+
+export type Artwork = {
+  description: string;
+  title: string;
+  type: string;
+  url: string;
+};
 
 // TODO: environmental variables?
 const firebaseConfig = {
@@ -25,6 +38,44 @@ export const readAboutText = async () => {
     return paragraphs;
   } else {
     console.log("No such document!");
+    return [];
+  }
+};
+
+export const getAllArtworkTypes = async (): Promise<string[]> => {
+  const artworkCollectionRef = collection(db, "artworkTypes");
+  try {
+    const snapshot = await getDocs(artworkCollectionRef);
+    const types: string[] = snapshot.docs.map((doc) => {
+      const data = doc.data();
+      return String(data.typeName ?? "");
+    });
+
+    return types;
+  } catch (error) {
+    console.error("Error fetching documents:", error);
+    return [];
+  }
+};
+
+export const getAllArtwork = async (): Promise<Artwork[]> => {
+  const artworkCollectionRef = collection(db, "artwork");
+  try {
+    const snapshot = await getDocs(artworkCollectionRef);
+    const artwork: Artwork[] = snapshot.docs.map((doc) => {
+      const data = doc.data();
+
+      return {
+        description: String(data.description ?? ""),
+        title: String(data.title ?? ""),
+        type: String(data.type ?? ""),
+        url: String(data.url ?? ""),
+      };
+    });
+
+    return artwork;
+  } catch (error) {
+    console.error("Error fetching documents:", error);
     return [];
   }
 };
