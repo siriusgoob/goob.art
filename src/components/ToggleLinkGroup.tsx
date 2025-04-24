@@ -7,22 +7,27 @@ import {
 
 interface ToggleLinkGroupProps {
   selectedType: string;
+  setSelectedType: (type: string) => void;
   types: string[];
 }
 
-function ToggleLinkGroup({ selectedType, types }: ToggleLinkGroupProps) {
+function ToggleLinkGroup({
+  selectedType,
+  setSelectedType,
+  types,
+}: ToggleLinkGroupProps) {
   const theme = useTheme();
 
   return (
     <ToggleButtonGroup
       exclusive
-      value={selectedType}
       sx={{
         display: "flex",
         flexDirection: "column",
         gap: "24px",
         paddingBottom: "100px",
       }}
+      value={selectedType}
     >
       {types.map((type) => (
         <ToggleButton
@@ -30,6 +35,7 @@ function ToggleLinkGroup({ selectedType, types }: ToggleLinkGroupProps) {
           disableFocusRipple
           disableTouchRipple
           key={type}
+          onClick={() => setSelectedType(type)}
           sx={{
             alignItems: "center",
             backgroundColor: "transparent",
@@ -38,13 +44,19 @@ function ToggleLinkGroup({ selectedType, types }: ToggleLinkGroupProps) {
             display: "flex",
             justifyContent: "start",
             padding: 0,
+            textShadow: `0 0 10px ${theme.palette.text.primary}`,
             width: "fit-content",
             "&:hover": {
               backgroundColor: "transparent",
+              textShadow: `0 0 20px ${theme.palette.text.primary}`,
             },
             "&.Mui-selected": {
               backgroundColor: "transparent",
               color: theme.palette.text.secondary,
+            },
+            "&.Mui-selected:hover": {
+              backgroundColor: "transparent",
+              textShadow: `0 0 20px ${theme.palette.text.primary}`,
             },
           }}
           value={type}

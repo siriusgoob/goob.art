@@ -1,5 +1,6 @@
 import { Box, Container, Typography, useTheme } from "@mui/material";
 import ToggleLinkGroup from "../components/ToggleLinkGroup";
+import ArtworkModal from "../components/ArtworkModal";
 import {
   type Artwork,
   getAllArtwork,
@@ -11,6 +12,7 @@ function ArtPage() {
   const theme = useTheme();
   const [types, setTypes] = useState<string[]>([]);
   const [artworks, setArtworks] = useState<Artwork[]>([]);
+  const [selectedType, setSelectedType] = useState<string>("All");
 
   useEffect(() => {
     const fetchTypes = async () => {
@@ -64,17 +66,35 @@ function ArtPage() {
             >
               Categories
             </Typography>
-            <ToggleLinkGroup selectedType="All" types={types} />
+            <ToggleLinkGroup
+              selectedType={selectedType}
+              setSelectedType={setSelectedType}
+              types={types}
+            />
           </Box>
-          <Box>
+          <Box
+            display="grid"
+            gap="40px"
+            gridTemplateColumns="repeat(auto-fill, minmax(25%, 1fr))"
+            width="100%"
+          >
             {artworks &&
-              artworks.map((artwork: Artwork, index: number) => (
-                <Box key={index} sx={{ pt: 4 }}>
-                  <Typography variant="h3">{artwork.title}</Typography>
-                  <img src={artwork.url} alt={artwork.title} width="300" />
-                  <Typography variant="body1">{artwork.description}</Typography>
-                </Box>
-              ))}
+              artworks
+                .filter(
+                  (artwork) =>
+                    artwork.type === selectedType || selectedType === "All"
+                )
+                .map((artwork: Artwork, index: number) => (
+                  <Box
+                    border={`1px solid ${theme.palette.text.secondary}`}
+                    component="img"
+                    height="auto"
+                    key={index}
+                    src={artwork.url}
+                    sx={{ cursor: "pointer", objectFit: "cover" }}
+                    width="100%"
+                  />
+                ))}
           </Box>
         </Box>
       </Box>
