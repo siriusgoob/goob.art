@@ -13,6 +13,8 @@ function ArtPage() {
   const [types, setTypes] = useState<string[]>([]);
   const [artworks, setArtworks] = useState<Artwork[]>([]);
   const [selectedType, setSelectedType] = useState<string>("All");
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
 
   useEffect(() => {
     const fetchTypes = async () => {
@@ -90,11 +92,22 @@ function ArtPage() {
                     component="img"
                     height="auto"
                     key={index}
+                    onClick={() => {
+                      setModalOpen(true);
+                      setSelectedArtwork(artwork);
+                    }}
                     src={artwork.url}
                     sx={{ cursor: "pointer", objectFit: "cover" }}
                     width="100%"
                   />
                 ))}
+            {modalOpen && (
+              <ArtworkModal
+                artwork={selectedArtwork}
+                onClose={() => setModalOpen(false)}
+                open={modalOpen}
+              />
+            )}
           </Box>
         </Box>
       </Box>

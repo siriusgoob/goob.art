@@ -1,11 +1,8 @@
 import { Box, Modal, Typography, useTheme } from "@mui/material";
+import { type Artwork } from "../utils/firebase";
 
 interface ArtworkModalProps {
-  artwork: {
-    title: string;
-    description: string;
-    imageUrl: string;
-  };
+  artwork: Artwork | null;
   onClose: () => void;
   open: boolean;
 }
@@ -18,34 +15,65 @@ function ArtworkModal({ artwork, onClose, open }: ArtworkModalProps) {
       open={open}
       onClose={onClose}
       sx={{
-        display: "flex",
         alignItems: "center",
+        backgroundColor: "rgba(0, 0, 0, 0.8)",
+        display: "flex",
         justifyContent: "center",
       }}
     >
-      <Box
-        sx={{
-          backgroundColor: theme.palette.background.paper,
-          borderRadius: "8px",
-          boxShadow: 24,
-          padding: "16px",
-          width: "80vw",
-          maxWidth: "600px",
-          textAlign: "center",
-        }}
-      >
-        <Typography variant="h4" sx={{ marginBottom: "16px" }}>
-          {artwork.title}
-        </Typography>
-        <img
-          src={artwork.imageUrl}
-          alt={artwork.title}
-          style={{ width: "100%" }}
-        />
-        <Typography variant="body1" sx={{ marginTop: "16px" }}>
-          {artwork.description}
-        </Typography>
-      </Box>
+      <>
+        <Box
+          border={`1px solid ${theme.palette.text.secondary}`}
+          display="flex"
+          flexDirection="column"
+          height="80vh"
+          maxWidth="80vw"
+        >
+          <Box
+            borderBottom={`1px solid ${theme.palette.text.secondary}`}
+            component="img"
+            height="100%"
+            src={artwork?.url}
+            width="auto"
+          />
+          <Box
+            sx={{
+              backgroundColor: theme.palette.background.default,
+              display: "flex",
+              flexDirection: "column",
+              gap: "20px",
+              padding: "36px",
+            }}
+          >
+            <Typography
+              sx={{
+                color: theme.palette.text.secondary,
+                textShadow: `0 0 5px ${theme.palette.text.secondary}`,
+              }}
+              variant="h4"
+            >
+              {artwork?.title}
+            </Typography>
+            <Typography variant="body1">{artwork?.description}</Typography>
+          </Box>
+        </Box>
+        <Box
+          onClick={() => onClose()}
+          sx={{
+            cursor: "pointer",
+            position: "relative",
+            top: "calc(-40vh + 22px)",
+            right: "-30px",
+          }}
+        >
+          <Typography
+            sx={{ textShadow: `0 0 10px ${theme.palette.text.primary}` }}
+            variant="h1"
+          >
+            X
+          </Typography>
+        </Box>
+      </>
     </Modal>
   );
 }

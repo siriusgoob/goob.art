@@ -28,7 +28,7 @@ declare module "@mui/material/styles" {
   }
 }
 
-declare module '@mui/material/Typography' {
+declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     copyright: true;
     navbar: true;
@@ -72,6 +72,12 @@ const typography: TypographyVariantsOptions = {
     fontFamily: "Century Gothic Paneuropean",
     fontSize: "22px",
     letterSpacing: "12px",
+  },
+  h4: {
+    fontFamily: "Rubik Spray Paint",
+    fontSize: "36px",
+    letterSpacing: "6px",
+    textTransform: "uppercase",
   },
   navbar: {
     fontFamily: "Century Gothic Paneuropean",
