@@ -61,7 +61,7 @@ function ArtPage() {
             <Typography
               sx={{
                 color: theme.palette.accent.light,
-                pb: 4,
+                mb: 8,
                 textShadow: `0 0 10px ${theme.palette.accent.main}`,
               }}
               variant="h3"

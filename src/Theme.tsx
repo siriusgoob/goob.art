@@ -42,6 +42,12 @@ const typography: TypographyVariantsOptions = {
     letterSpacing: "3px",
     textAlign: "justify",
   },
+  body2: {
+    fontFamily: "Century Gothic Paneuropean",
+    fontSize: "18px",
+    letterSpacing: "3px",
+    textAlign: "justify",
+  },
   button: {
     fontFamily: "Century Gothic Paneuropean",
     fontSize: "22px",
@@ -84,6 +90,12 @@ const typography: TypographyVariantsOptions = {
     fontSize: "18px",
     letterSpacing: "3px",
     textTransform: "uppercase",
+  },
+  subtitle1: {
+    fontFamily: "Century Gothic Paneuropean",
+    fontSize: "`8px",
+    fontWeight: 300,
+    letterSpacing: "3px",
   },
 };
 
