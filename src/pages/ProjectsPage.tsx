@@ -1,9 +1,19 @@
 import { Box, Container, Typography, useTheme } from "@mui/material";
 import dividingBrush from "../assets/images/dividing_brush.webp";
 import featuredProjectBrush from "../assets/images/featured_project_brush.webp";
+import projectCard1 from "../assets/images/project_card_1.webp";
+import projectCard2 from "../assets/images/project_card_2.webp";
+import projectCard3 from "../assets/images/project_card_3.webp";
+import projectCard4 from "../assets/images/project_card_4.webp";
 
 function ProjectsPage() {
   const theme = useTheme();
+  const projectCardImages = [
+    projectCard1,
+    projectCard2,
+    projectCard3,
+    projectCard4,
+  ];
 
   return (
     <Container
@@ -80,6 +90,7 @@ function ProjectsPage() {
             alignItems="center"
             display="flex"
             flexDirection="column"
+            mb="200px"
             width="100%"
           >
             <Typography
@@ -133,29 +144,28 @@ function ProjectsPage() {
                 </Typography>
               </Box>
             </Box>
-            {/* <Box
-              minHeight="100%"
-              height="auto"
+          </Box>
+          <Box
+            alignItems="center"
+            display="flex"
+            flexDirection="column"
+            mb="200px"
+            width="100%"
+          >
+            <Typography
+              mb="40px"
               sx={{
-                backgroundImage: `url(${featuredProjectBrush})`,
-                backgroundPosition: "center",
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
+                color: theme.palette.accent.light,
+                textShadow: `0 0 10px ${theme.palette.accent.main}`,
               }}
-              width="90%"
+              variant="h3"
+              width="100%"
             >
-              <Box display="flex" flexDirection="column" width="100%">
-                <Typography variant="h1">Project Title</Typography>
-                <Typography variant="subtitle1">
-                  XX minute read | MM-DD-YYYY
-                </Typography>
-                <Typography variant="body1">
-                  Project description Lorem ipsum dolor sit amet, consectetur
-                  adipiscing elit. Suspendisse ac ligula nec eros finibus pretium
-                  in non nisl. In sit amet nisl eu metus tempor aliquet.
-                </Typography>
-              </Box>
-            </Box> */}
+              Other Projects
+            </Typography>
+            <Box display="flex" width="100%">
+              
+            </Box>
           </Box>
         </Box>
       </Box>
