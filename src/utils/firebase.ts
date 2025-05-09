@@ -14,6 +14,12 @@ export type Artwork = {
   url: string;
 };
 
+export type Project = {
+  dates: string;
+  description: string;
+  title: string;
+};
+
 // TODO: environmental variables?
 const firebaseConfig = {
   apiKey: "AIzaSyA4vnOai1vybGctuoYuD_3onO6uarKgbNQ",
@@ -37,7 +43,7 @@ export const readAboutText = async () => {
     const paragraphs: string[] = data.paragraphs;
     return paragraphs;
   } else {
-    console.log("No such document!");
+    console.log("Cannot find about text document!");
     return [];
   }
 };
@@ -53,7 +59,7 @@ export const getAllArtworkTypes = async (): Promise<string[]> => {
 
     return types;
   } catch (error) {
-    console.error("Error fetching documents:", error);
+    console.error("Error fetching artwork types:", error);
     return [];
   }
 };
@@ -75,7 +81,28 @@ export const getAllArtwork = async (): Promise<Artwork[]> => {
 
     return artwork;
   } catch (error) {
-    console.error("Error fetching documents:", error);
+    console.error("Error fetching artworks:", error);
+    return [];
+  }
+};
+
+export const getAllProjects = async (): Promise<Project[]> => {
+  const projectsCollectionRef = collection(db, "projects");
+  try {
+    const snapshot = await getDocs(projectsCollectionRef);
+    const projects: Project[] = snapshot.docs.map((doc) => {
+      const data = doc.data();
+
+      return {
+        dates: String(data.dates ?? ""),
+        description: String(data.description ?? ""),
+        title: String(data.title ?? ""),
+      };
+    });
+
+    return projects;
+  } catch (error) {
+    console.error("Error fetching projects:", error);
     return [];
   }
 };

@@ -93,7 +93,7 @@ const typography: TypographyVariantsOptions = {
   },
   subtitle1: {
     fontFamily: "Century Gothic Paneuropean",
-    fontSize: "`8px",
+    fontSize: "18px",
     fontWeight: 300,
     letterSpacing: "3px",
   },

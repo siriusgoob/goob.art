@@ -1,4 +1,6 @@
 import { Box, Container, Typography, useTheme } from "@mui/material";
+import { getAllProjects, type Project } from "../utils/firebase";
+import { useEffect, useState } from "react";
 import dividingBrush from "../assets/images/dividing_brush.webp";
 import featuredProjectBrush from "../assets/images/featured_project_brush.webp";
 import projectCard1 from "../assets/images/project_card_1.webp";
@@ -14,6 +16,16 @@ function ProjectsPage() {
     projectCard3,
     projectCard4,
   ];
+
+  const [projects, setProjects] = useState<Project[]>([]);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const data = await getAllProjects();
+      setProjects(data);
+    };
+    fetchProjects();
+  }, []);
 
   return (
     <Container
@@ -129,7 +141,7 @@ function ProjectsPage() {
                   Project Title
                 </Typography>
                 <Typography
-                  sx={{ color: theme.palette.background.default }}
+                  sx={{ color: theme.palette.background.default, mb: 4 }}
                   variant="subtitle1"
                 >
                   XX minute read | MM-DD-YYYY
@@ -163,8 +175,55 @@ function ProjectsPage() {
             >
               Other Projects
             </Typography>
-            <Box display="flex" width="100%">
-              
+            <Box display="flex" flexWrap="wrap" gap="10%" width="100%">
+              {projects &&
+                projects.map((project: Project, index: number) => (
+                  <Box
+                    alignItems="center"
+                    display="flex"
+                    flexDirection="column"
+                    flexWrap="wrap"
+                    justifyContent="center"
+                    minWidth="45%"
+                    position="relative"
+                    width="45%"
+                  >
+                    <Box
+                      component="img"
+                      src={projectCardImages[index % 4]}
+                      width="100%"
+                    />
+                    <Box
+                      display="flex"
+                      flexDirection="column"
+                      left="0"
+                      paddingX={8}
+                      position="absolute"
+                      sx={{ transform: "translateY(-50%)" }}
+                      top="50%"
+                      width="100%"
+                    >
+                      <Typography
+                        sx={{ color: theme.palette.accent.light }}
+                        variant="h4"
+                      >
+                        {project.title}
+                      </Typography>
+                      <Typography
+                        sx={{ color: theme.palette.text.secondary, mb: 4 }}
+                        variant="subtitle1"
+                      >
+                        XX minute read | {project.dates}
+                      </Typography>
+                      <Typography
+                        sx={{ color: theme.palette.text.secondary }}
+                        variant="body1"
+                      >
+                        {project.description}
+                      </Typography>
+                    </Box>
+                  </Box>
+                ))}
             </Box>
           </Box>
         </Box>
