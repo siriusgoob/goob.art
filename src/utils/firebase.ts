@@ -17,6 +17,9 @@ export type Artwork = {
 export type Project = {
   dates: string;
   description: string;
+  links: Record<string, string>;
+  paragraphs: string[];
+  projectId: string;
   title: string;
 };
 
@@ -96,6 +99,9 @@ export const getAllProjects = async (): Promise<Project[]> => {
       return {
         dates: String(data.dates ?? ""),
         description: String(data.description ?? ""),
+        links: data.links ?? {}, // TODO: cast?
+        paragraphs: Array(data.paragraphs ?? []),
+        projectId: String(data.projectId ?? ""),
         title: String(data.title ?? ""),
       };
     });
