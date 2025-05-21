@@ -47,7 +47,6 @@ function ProjectPage() {
           display="flex"
           flexDirection="column"
           justifyContent="space-between"
-          position="fixed"
           width="40%"
         >
           <Box
