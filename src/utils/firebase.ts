@@ -112,3 +112,41 @@ export const getAllProjects = async (): Promise<Project[]> => {
     return [];
   }
 };
+
+export const getProject = async (
+  projectKey: string
+): Promise<Project | null> => {
+  const projectDocRef = doc(db, "projects", projectKey);
+  const docSnap = await getDoc(projectDocRef);
+
+  if (docSnap.exists()) {
+    const data = docSnap.data();
+    const project = {
+      dates: String(data.dates ?? ""),
+      description: String(data.description ?? ""),
+      links: data.links ?? {}, // TODO: cast?
+      paragraphs: Array(data.paragraphs ?? []),
+      projectId: String(data.projectId ?? ""),
+      title: String(data.title ?? ""),
+    };
+    console.log(project);
+    return project;
+  } else {
+    console.log(`Cannot find project ${projectKey} document!`);
+    return null;
+  }
+};
+
+export const getMissionAndVision = async (): Promise<[string, string]> => {
+  const missionAndVisionDocRef = doc(db, "misc", "missionAndVision");
+  const docSnap = await getDoc(missionAndVisionDocRef);
+
+  if (docSnap.exists()) {
+    const data = docSnap.data();
+    const missionAndVision: [string, string] = [data.mission, data.vision];
+    return missionAndVision;
+  } else {
+    console.log("Cannot find mission and vision document!");
+    return ["", ""];
+  }
+};

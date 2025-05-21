@@ -6,7 +6,7 @@ interface NavbarLinkProps {
   to: string;
 }
 
-function NavbarLink({ text, to }: NavbarLinkProps) {
+export function NavbarLink({ text, to }: NavbarLinkProps) {
   const theme = useTheme();
 
   return (

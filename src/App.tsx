@@ -6,6 +6,7 @@ import ProjectsPage from "./pages/ProjectsPage";
 import ProjectPage from "./pages/ProjectPage";
 import ArtPage from "./pages/ArtPage";
 import AboutPage from "./pages/AboutPage";
+import ErrorPage from "./pages/ErrorPage";
 import Navbar from "./components/Navbar";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/projects/:projectId" element={<ProjectPage />} />
           <Route path="/art" element={<ArtPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/error" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

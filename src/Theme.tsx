@@ -85,6 +85,12 @@ const typography: TypographyVariantsOptions = {
     letterSpacing: "6px",
     textTransform: "uppercase",
   },
+  h5: {
+    fontFamily: "Century Gothic Paneuropean",
+    fontSize: "22px",
+    fontWeight: 300,
+    letterSpacing: "5px",
+  },
   navbar: {
     fontFamily: "Century Gothic Paneuropean",
     fontSize: "18px",

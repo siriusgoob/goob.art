@@ -1,8 +1,23 @@
 import { Box, Typography } from "@mui/material";
 import dividingBrush from "../assets/images/dividing_brush.webp";
+import { getMissionAndVision } from "../utils/firebase";
+import { useEffect, useState } from "react";
 
 // TODO: get from firebase
 function MissionVision() {
+  const [missionAndVision, setMissionAndVision] = useState<[string, string]>([
+    "",
+    "",
+  ]);
+
+  useEffect(() => {
+    const fetchMissionAndVision = async () => {
+      const data = await getMissionAndVision();
+      setMissionAndVision(data);
+    };
+    fetchMissionAndVision();
+  }, []);
+
   return (
     <Box alignItems="center" display="flex" justifyContent="center" mb="200px">
       <Box
@@ -15,11 +30,7 @@ function MissionVision() {
         <Typography mb="20px" variant="h2">
           Mission
         </Typography>
-        <Typography variant="body2">
-          A mission statement is a crucial aspect of any business or individual.
-          Your mission statement should reflect your purpose and the audience
-          you are trying to reach.
-        </Typography>
+        <Typography variant="body2">{missionAndVision[0]}</Typography>
       </Box>
       <Box component="img" src={dividingBrush} width="25%" />
       <Box
@@ -32,11 +43,7 @@ function MissionVision() {
         <Typography mb="20px" variant="h2">
           Vision
         </Typography>
-        <Typography variant="body2">
-          A vision statement is an important tool that helps define the
-          direction and purpose of your work. It should be concise, inspiring,
-          and reflective of values.
-        </Typography>
+        <Typography variant="body2">{missionAndVision[1]}</Typography>
       </Box>
     </Box>
   );
