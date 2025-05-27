@@ -19,11 +19,13 @@ declare module "@mui/material/styles" {
 
   interface TypographyVariants {
     copyright: React.CSSProperties;
+    link: React.CSSProperties;
     navbar: React.CSSProperties;
   }
 
   interface TypographyVariantsOptions {
     copyright?: React.CSSProperties;
+    link?: React.CSSProperties;
     navbar?: React.CSSProperties;
   }
 }
@@ -31,6 +33,7 @@ declare module "@mui/material/styles" {
 declare module "@mui/material/Typography" {
   interface TypographyPropsVariantOverrides {
     copyright: true;
+    link: true;
     navbar: true;
   }
 }
@@ -90,6 +93,12 @@ const typography: TypographyVariantsOptions = {
     fontSize: "22px",
     fontWeight: 300,
     letterSpacing: "5px",
+  },
+  link: {
+    fontFamily: "Century Gothic Paneuropean",
+    fontSize: "22px",
+    letterSpacing: "3px",
+    textDecoration: "underline",
   },
   navbar: {
     fontFamily: "Century Gothic Paneuropean",

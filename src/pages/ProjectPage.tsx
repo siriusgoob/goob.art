@@ -1,10 +1,10 @@
 import { Box, Container, Typography, useTheme } from "@mui/material";
 import { NavbarLink } from "../components/Navbar";
+import BulletedLinkList from "../components/BulletedLinkList";
 import { getProject, type Project } from "../utils/firebase";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-// TODO: fix database pull
 function ProjectPage() {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -17,8 +17,8 @@ function ProjectPage() {
       if (!data) {
         navigate("/error");
       }
-      setProject(project);
-      console.log(project);
+      setProject(data);
+      console.log(data);
     };
     fetchProject();
   }, [navigate, project, projectId]);
@@ -27,7 +27,6 @@ function ProjectPage() {
     <Container
       maxWidth={false}
       sx={{
-        background: `linear-gradient(180deg, ${theme.palette.primary.dark} 0%, ${theme.palette.background.default} 100%)`,
         display: "flex",
         flexDirection: "column",
         height: "100vh",
@@ -63,7 +62,7 @@ function ProjectPage() {
               }}
               variant="h4"
             >
-              Project Title
+              {project?.title}
             </Typography>
             <Typography
               mb="40px"
@@ -78,15 +77,13 @@ function ProjectPage() {
               . . .
             </Typography>
             <Typography mb="40px" variant="body1">
-              Project description Lorem ipsum dolor sit amet, consectetur
-              adipiscing elit. Suspendisse ac ligula nec eros finibus pretium in
-              non nisl. In sit amet nisl eu metus tempor aliquet.
+              {project?.description}
             </Typography>
             <Typography
               sx={{ color: theme.palette.text.secondary }}
               variant="h5"
             >
-              XX minute read | MM-DD-YYYY
+              XX minute read | {project?.dates}
             </Typography>
           </Box>
           <NavbarLink text="Go Back to Projects" to="/projects" />
@@ -105,7 +102,25 @@ function ProjectPage() {
           display="flex"
           flexDirection="column"
           width="60%"
-        ></Box>
+        >
+          {/* TODO: header image */}
+          <Box mb={8}>
+            {project?.paragraphs.map((paragraph: string, index: number) => (
+              <Typography key={index} mb={4} sx={{ textIndent: "20px" }}>
+                {paragraph}
+              </Typography>
+            ))}
+          </Box>
+          <Box mb={8}>
+            <Typography
+              sx={{ color: theme.palette.text.secondary }}
+              variant="h2"
+            >
+              LINKS
+            </Typography>
+            <BulletedLinkList links={project?.links} />
+          </Box>
+        </Box>
       </Box>
     </Container>
   );

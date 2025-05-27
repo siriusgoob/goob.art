@@ -99,8 +99,8 @@ export const getAllProjects = async (): Promise<Project[]> => {
       return {
         dates: String(data.dates ?? ""),
         description: String(data.description ?? ""),
-        links: data.links ?? {}, // TODO: cast?
-        paragraphs: Array(data.paragraphs ?? []),
+        links: data.links ?? {},
+        paragraphs: data.paragraphs ?? [],
         projectId: String(data.projectId ?? ""),
         title: String(data.title ?? ""),
       };
@@ -124,12 +124,11 @@ export const getProject = async (
     const project = {
       dates: String(data.dates ?? ""),
       description: String(data.description ?? ""),
-      links: data.links ?? {}, // TODO: cast?
-      paragraphs: Array(data.paragraphs ?? []),
+      links: data.links ?? {},
+      paragraphs: data.paragraphs ?? [],
       projectId: String(data.projectId ?? ""),
       title: String(data.title ?? ""),
-    };
-    console.log(project);
+    }
     return project;
   } else {
     console.log(`Cannot find project ${projectKey} document!`);
