@@ -1,10 +1,12 @@
 import { Box, Container, Typography, useTheme } from "@mui/material";
 import { NavbarLink } from "../components/Navbar";
+import ArtworkModal from "../components/ArtworkModal";
 import BulletedLinkList from "../components/BulletedLinkList";
 import Image from "../components/Image";
-import { getProject, type Project } from "../utils/firebase";
+import { getProject, type Artwork, type Project } from "../utils/firebase";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { getReadTime } from "../utils/utils";
 
 function ProjectPage() {
   const theme = useTheme();
@@ -20,7 +22,7 @@ function ProjectPage() {
         navigate("/error");
       }
       setProject(data);
-      console.log(data);
+      console.log(data?.images);
     };
     fetchProject();
   }, [navigate, project, projectId]);
@@ -31,7 +33,6 @@ function ProjectPage() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        height: "100vh",
         width: "100vw",
       }}
     >
@@ -48,7 +49,7 @@ function ProjectPage() {
           display="flex"
           flexDirection="column"
           justifyContent="space-between"
-          width="40%"
+          width="35%"
         >
           <Box
             alignItems="start"
@@ -60,9 +61,11 @@ function ProjectPage() {
               mb="20px"
               sx={{
                 color: theme.palette.text.secondary,
+                textAlign: "center",
                 textShadow: `0 0 10px ${theme.palette.text.secondary}`,
               }}
               variant="h4"
+              width="100%"
             >
               {project?.title}
             </Typography>
@@ -85,13 +88,12 @@ function ProjectPage() {
               sx={{ color: theme.palette.text.secondary }}
               variant="h5"
             >
-              XX minute read | {project?.dates}
+              {getReadTime(project?.paragraphs)} minute read | {project?.dates}
             </Typography>
           </Box>
           <NavbarLink text="Go Back to Projects" to="/projects" />
         </Box>
         <Box
-          height="100%"
           marginX="100px"
           sx={{
             backgroundColor: theme.palette.text.secondary,
@@ -103,12 +105,20 @@ function ProjectPage() {
           alignItems="start"
           display="flex"
           flexDirection="column"
-          width="60%"
+          width="65%"
         >
-          <Image artwork={project?.headerImage} setModalOpen={setModalOpen} />
+          <Image
+            artwork={project?.headerImage}
+            setModalOpen={setModalOpen}
+            sx={{ mb: 8 }}
+          />
           <Box mb={8}>
             {project?.paragraphs.map((paragraph: string, index: number) => (
-              <Typography key={index} mb={4} sx={{ textIndent: "20px" }}>
+              <Typography
+                key={index}
+                mb={index === project?.paragraphs.length - 1 ? 0 : 4}
+                sx={{ textIndent: "20px" }}
+              >
                 {paragraph}
               </Typography>
             ))}
@@ -122,7 +132,29 @@ function ProjectPage() {
             </Typography>
             <BulletedLinkList links={project?.links} />
           </Box>
+          <Box
+            display="grid"
+            gap="40px"
+            gridTemplateColumns="repeat(2, 1fr)"
+            width="100%"
+          >
+            {project?.images &&
+              project.images.map((artwork: Artwork, index: number) => (
+                <Image
+                  artwork={artwork}
+                  key={index}
+                  setModalOpen={setModalOpen}
+                />
+              ))}
+          </Box>
         </Box>
+        {modalOpen && (
+          <ArtworkModal
+            artwork={project?.headerImage}
+            onClose={() => setModalOpen(false)}
+            open={modalOpen}
+          />
+        )}
       </Box>
     </Container>
   );

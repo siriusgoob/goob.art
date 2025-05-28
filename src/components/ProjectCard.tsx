@@ -5,6 +5,7 @@ import projectCard1 from "../assets/images/project_card_1.webp";
 import projectCard2 from "../assets/images/project_card_2.webp";
 import projectCard3 from "../assets/images/project_card_3.webp";
 import projectCard4 from "../assets/images/project_card_4.webp";
+import { getReadTime } from "../utils/utils";
 
 interface ProjectCardProps {
   index: number;
@@ -20,6 +21,7 @@ function ProjectCard({ index, project }: ProjectCardProps) {
     projectCard3,
     projectCard4,
   ];
+  const readTime = getReadTime(project.paragraphs);
 
   return (
     <Card
@@ -60,7 +62,7 @@ function ProjectCard({ index, project }: ProjectCardProps) {
             sx={{ color: theme.palette.text.secondary, mb: 4 }}
             variant="subtitle1"
           >
-            XX minute read | {project.dates}
+            {readTime} minute read | {project.dates}
           </Typography>
           <Typography
             sx={{ color: theme.palette.text.secondary }}

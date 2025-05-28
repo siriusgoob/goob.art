@@ -1,16 +1,23 @@
-import { Box, useTheme } from "@mui/material";
+import { Box, type BoxProps, useTheme } from "@mui/material";
 import { type Artwork } from "../utils/firebase";
 import React from "react";
 
-interface ImageProps {
+interface ImageProps extends Pick<BoxProps, "sx"> {
   artwork: Artwork | null | undefined;
   key?: number;
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setSelectedArtwork?: React.Dispatch<React.SetStateAction<Artwork | null 
-  | undefined>>;
+  setSelectedArtwork?: React.Dispatch<
+    React.SetStateAction<Artwork | null | undefined>
+  >;
 }
 
-function Image({ artwork, key, setModalOpen, setSelectedArtwork }: ImageProps) {
+function Image({
+  artwork,
+  key,
+  setModalOpen,
+  setSelectedArtwork,
+  sx,
+}: ImageProps) {
   const theme = useTheme();
 
   return (
@@ -24,7 +31,7 @@ function Image({ artwork, key, setModalOpen, setSelectedArtwork }: ImageProps) {
         if (setSelectedArtwork) setSelectedArtwork(artwork);
       }}
       src={artwork?.url}
-      sx={{ cursor: "pointer", objectFit: "cover" }}
+      sx={Object.assign({}, { cursor: "pointer", objectFit: "cover" }, sx)}
       width="100%"
     />
   );

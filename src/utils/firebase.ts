@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import {
   collection,
   doc,
+  DocumentData,
   getDoc,
   getDocs,
   getFirestore,
@@ -18,6 +19,7 @@ export type Project = {
   dates: string;
   description: string;
   headerImage: Artwork | null;
+  images: Artwork[];
   links: Record<string, string>;
   paragraphs: string[];
   projectId: string;
@@ -92,21 +94,63 @@ export const getAllArtwork = async (): Promise<Artwork[]> => {
 
 export const getAllProjects = async (): Promise<Project[]> => {
   const projectsCollectionRef = collection(db, "projects");
+
   try {
     const snapshot = await getDocs(projectsCollectionRef);
-    
-    const projects: Project[] = snapshot.docs.map((doc) => {
-      const data = doc.data();
 
-      return {
-        dates: String(data.dates ?? ""),
-        description: String(data.description ?? ""),
-        links: data.links ?? {},
-        paragraphs: data.paragraphs ?? [],
-        projectId: String(data.projectId ?? ""),
-        title: String(data.title ?? ""),
-      };
-    });
+    const projects: Project[] = await Promise.all(
+      snapshot.docs.map(async (projectDoc) => {
+        const data = projectDoc.data();
+
+        let headerImage = null;
+        const headerImagePath = data.headerImage?.path ?? "";
+        if (headerImagePath) {
+          const headerImageRef = doc(db, headerImagePath);
+          const headerImageSnap = await getDoc(headerImageRef);
+          if (headerImageSnap.exists()) {
+            const headerImageData = headerImageSnap.data();
+            headerImage = {
+              description: String(headerImageData.description ?? ""),
+              title: String(headerImageData.title ?? ""),
+              type: String(headerImageData.type ?? ""),
+              url: String(headerImageData.url ?? ""),
+            };
+          }
+        }
+
+        const images: Artwork[] = await Promise.all(
+          (data.images ?? []).map(async (imageRefPath: string) => {
+            try {
+              const imageRef = doc(db, imageRefPath);
+              const imageSnap = await getDoc(imageRef);
+              if (imageSnap.exists()) {
+                const imageData = imageSnap.data();
+                return {
+                  description: String(imageData.description ?? ""),
+                  title: String(imageData.title ?? ""),
+                  type: String(imageData.type ?? ""),
+                  url: String(imageData.url ?? ""),
+                };
+              }
+            } catch (error) {
+              console.warn(`Failed to fetch image at ${imageRefPath}`, error);
+            }
+            return null;
+          })
+        );
+
+        return {
+          dates: String(data.dates ?? ""),
+          description: String(data.description ?? ""),
+          headerImage,
+          images: images.filter(Boolean),
+          links: data.links ?? {},
+          paragraphs: data.paragraphs ?? [],
+          projectId: String(data.projectId ?? ""),
+          title: String(data.title ?? ""),
+        };
+      })
+    );
 
     return projects;
   } catch (error) {
@@ -121,12 +165,18 @@ export const getProject = async (
   const projectDocRef = doc(db, "projects", projectKey);
   const docSnap = await getDoc(projectDocRef);
 
-  if (docSnap.exists()) {
-    const data = docSnap.data();
-    const headerImageRef = doc(db, `${data.headerImage.split("/") ?? ""}`);
-    let headerImage = null;
-    const headerImageSnap = await getDoc(headerImageRef);
+  if (!docSnap.exists()) {
+    console.log(`Cannot find project ${projectKey} document!`);
+    return null;
+  }
 
+  const data = docSnap.data();
+
+  let headerImage = null;
+  const headerImagePath = data.headerImage?.path ?? "";
+  if (headerImagePath) {
+    const headerImageRef = doc(db, headerImagePath);
+    const headerImageSnap = await getDoc(headerImageRef);
     if (headerImageSnap.exists()) {
       const headerImageData = headerImageSnap.data();
       headerImage = {
@@ -137,24 +187,44 @@ export const getProject = async (
       };
     } else {
       console.log(
-        `Cannot find header image document with reference ${headerImageRef}!`
+        `Cannot find header image document with reference ${headerImageRef.path}!`
       );
     }
-
-    const project = {
-      dates: String(data.dates ?? ""),
-      description: String(data.description ?? ""),
-      headerImage: headerImage,
-      links: data.links ?? {},
-      paragraphs: data.paragraphs ?? [],
-      projectId: String(data.projectId ?? ""),
-      title: String(data.title ?? ""),
-    };
-    return project;
-  } else {
-    console.log(`Cannot find project ${projectKey} document!`);
-    return null;
   }
+
+  const images: Artwork[] = await Promise.all(
+    (data.images ?? []).map(async (image: DocumentData) => {
+      try {
+        const imageRef = doc(db, image.path);
+        const imageSnap = await getDoc(imageRef);
+        if (imageSnap.exists()) {
+          const imageData = imageSnap.data();
+          return {
+            description: String(imageData.description ?? ""),
+            title: String(imageData.title ?? ""),
+            type: String(imageData.type ?? ""),
+            url: String(imageData.url ?? ""),
+          };
+        }
+      } catch (error) {
+        console.warn(`Failed to fetch image at ${image.path}`, error);
+      }
+      return null;
+    })
+  );
+
+  const project: Project = {
+    dates: String(data.dates ?? ""),
+    description: String(data.description ?? ""),
+    headerImage,
+    images: images.filter(Boolean),
+    links: data.links ?? {},
+    paragraphs: data.paragraphs ?? [],
+    projectId: String(data.projectId ?? ""),
+    title: String(data.title ?? ""),
+  };
+
+  return project;
 };
 
 export const getMissionAndVision = async (): Promise<[string, string]> => {

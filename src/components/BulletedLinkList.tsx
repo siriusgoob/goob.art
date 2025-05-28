@@ -11,7 +11,7 @@ function BulletedLinkList({ links }: BulletedLinkListProps) {
     <List sx={{ listStyleType: "disc", ml: 4 }}>
       {links &&
         Object.entries(links).map(([text, url]) => (
-          <ListItem sx={{ display: "list-item" }}>
+          <ListItem key={text} sx={{ display: "list-item" }}>
             <Link
               href={url}
               rel="noopener noreferrer"

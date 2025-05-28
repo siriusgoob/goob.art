@@ -3,7 +3,6 @@ import dividingBrush from "../assets/images/dividing_brush.webp";
 import { getMissionAndVision } from "../utils/firebase";
 import { useEffect, useState } from "react";
 
-// TODO: get from firebase
 function MissionVision() {
   const [missionAndVision, setMissionAndVision] = useState<[string, string]>([
     "",
