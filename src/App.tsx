@@ -10,7 +10,6 @@ import ErrorPage from "./pages/ErrorPage";
 import Navbar from "./components/Navbar";
 
 function App() {
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -23,6 +22,7 @@ function App() {
           <Route path="/art" element={<ArtPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/error" element={<ErrorPage />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
