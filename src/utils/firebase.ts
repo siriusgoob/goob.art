@@ -17,6 +17,7 @@ export type Artwork = {
 export type Project = {
   dates: string;
   description: string;
+  headerImage: Artwork | null;
   links: Record<string, string>;
   paragraphs: string[];
   projectId: string;
@@ -93,6 +94,7 @@ export const getAllProjects = async (): Promise<Project[]> => {
   const projectsCollectionRef = collection(db, "projects");
   try {
     const snapshot = await getDocs(projectsCollectionRef);
+    
     const projects: Project[] = snapshot.docs.map((doc) => {
       const data = doc.data();
 
@@ -121,14 +123,33 @@ export const getProject = async (
 
   if (docSnap.exists()) {
     const data = docSnap.data();
+    const headerImageRef = doc(db, `${data.headerImage.split("/") ?? ""}`);
+    let headerImage = null;
+    const headerImageSnap = await getDoc(headerImageRef);
+
+    if (headerImageSnap.exists()) {
+      const headerImageData = headerImageSnap.data();
+      headerImage = {
+        description: String(headerImageData.description ?? ""),
+        title: String(headerImageData.title ?? ""),
+        type: String(headerImageData.type ?? ""),
+        url: String(headerImageData.url ?? ""),
+      };
+    } else {
+      console.log(
+        `Cannot find header image document with reference ${headerImageRef}!`
+      );
+    }
+
     const project = {
       dates: String(data.dates ?? ""),
       description: String(data.description ?? ""),
+      headerImage: headerImage,
       links: data.links ?? {},
       paragraphs: data.paragraphs ?? [],
       projectId: String(data.projectId ?? ""),
       title: String(data.title ?? ""),
-    }
+    };
     return project;
   } else {
     console.log(`Cannot find project ${projectKey} document!`);

@@ -1,6 +1,7 @@
 import { Box, Container, Typography, useTheme } from "@mui/material";
 import { NavbarLink } from "../components/Navbar";
 import BulletedLinkList from "../components/BulletedLinkList";
+import Image from "../components/Image";
 import { getProject, type Project } from "../utils/firebase";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -10,6 +11,7 @@ function ProjectPage() {
   const navigate = useNavigate();
   const { projectId } = useParams<{ projectId: string }>();
   const [project, setProject] = useState<Project | null>();
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchProject = async () => {
@@ -103,7 +105,7 @@ function ProjectPage() {
           flexDirection="column"
           width="60%"
         >
-          {/* TODO: header image */}
+          <Image artwork={project?.headerImage} setModalOpen={setModalOpen} />
           <Box mb={8}>
             {project?.paragraphs.map((paragraph: string, index: number) => (
               <Typography key={index} mb={4} sx={{ textIndent: "20px" }}>

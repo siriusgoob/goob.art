@@ -2,7 +2,7 @@ import { Box, Modal, Typography, useTheme } from "@mui/material";
 import { type Artwork } from "../utils/firebase";
 
 interface ArtworkModalProps {
-  artwork: Artwork | null;
+  artwork: Artwork | null | undefined;
   onClose: () => void;
   open: boolean;
 }

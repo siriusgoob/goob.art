@@ -1,6 +1,7 @@
 import { Box, Container, Typography, useTheme } from "@mui/material";
 import ToggleLinkGroup from "../components/ToggleLinkGroup";
 import ArtworkModal from "../components/ArtworkModal";
+import Image from "../components/Image";
 import {
   type Artwork,
   getAllArtwork,
@@ -14,7 +15,7 @@ function ArtPage() {
   const [artworks, setArtworks] = useState<Artwork[]>([]);
   const [selectedType, setSelectedType] = useState<string>("All");
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
+  const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null | undefined>(null);
 
   useEffect(() => {
     const fetchTypes = async () => {
@@ -87,18 +88,11 @@ function ArtPage() {
                     artwork.type === selectedType || selectedType === "All"
                 )
                 .map((artwork: Artwork, index: number) => (
-                  <Box
-                    border={`1px solid ${theme.palette.text.secondary}`}
-                    component="img"
-                    height="auto"
+                  <Image
+                    artwork={artwork}
                     key={index}
-                    onClick={() => {
-                      setModalOpen(true);
-                      setSelectedArtwork(artwork);
-                    }}
-                    src={artwork.url}
-                    sx={{ cursor: "pointer", objectFit: "cover" }}
-                    width="100%"
+                    setModalOpen={setModalOpen}
+                    setSelectedArtwork={setSelectedArtwork}
                   />
                 ))}
             {modalOpen && (
