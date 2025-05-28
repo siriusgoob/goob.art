@@ -240,3 +240,30 @@ export const getMissionAndVision = async (): Promise<[string, string]> => {
     return ["", ""];
   }
 };
+
+export const getFeaturedProject = async (): Promise<
+  Project | null | undefined
+> => {
+  const featuredProjectDocRef = doc(db, "misc", "featuredProject");
+  const docSnap = await getDoc(featuredProjectDocRef);
+
+  if (!docSnap.exists()) {
+    console.log("Cannot find project featured project document!");
+    return null;
+  }
+
+  const data = docSnap.data();
+  const projectPath = data.project?.path ?? "";
+  if (projectPath) {
+    const projectRef = doc(db, projectPath);
+    const projectSnap = await getDoc(projectRef);
+    if (projectSnap.exists()) {
+      const projectData = projectSnap.data();
+      return getProject(projectData.projectId);
+    } else {
+      console.log(
+        `Cannot find project document with reference ${projectRef.path}!`
+      );
+    }
+  }
+};

@@ -1,52 +1,78 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Card, CardActionArea, Typography, useTheme } from "@mui/material";
+import { getFeaturedProject, Project } from "../utils/firebase";
+import { getReadTime } from "../utils/utils";
 import featuredProjectBrush from "../assets/images/featured_project_brush.webp";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-// TODO: get featured card from firebase
 function FeaturedProjectCard() {
   const theme = useTheme();
+  const navigate = useNavigate();
+  const [project, setProject] = useState<Project | null>();
+
+  useEffect(() => {
+    const fetchProject = async () => {
+      const data = await getFeaturedProject();
+      setProject(data);
+    };
+    fetchProject();
+  }, []);
 
   return (
-    <Box
-      alignItems="center"
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      position="relative"
-      sx={{ cursor: "pointer" }}
-      width="100%"
+    <Card
+      sx={{
+        alignItems: "center",
+        backgroundColor: "transparent",
+        borderRadius: "30px",
+        cursor: "pointer",
+        display: "flex",
+        justifyContent: "center",
+        position: "relative",
+        width: "100%",
+      }}
     >
-      <Box component="img" src={featuredProjectBrush} width="90%" />
-      <Box
-        display="flex"
-        flexDirection="column"
-        left="22%"
-        position="absolute"
-        sx={{ transform: "translateY(-50%)" }}
-        top="50%"
-        width="56%"
+      <CardActionArea
+        disableRipple
+        disableTouchRipple
+        onClick={() => navigate(`/projects/${project?.projectId}`)}
+        sx={{
+          alignItems: "center",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
       >
-        <Typography
-          sx={{ color: theme.palette.background.default }}
-          variant="h1"
+        <Box component="img" src={featuredProjectBrush} width="90%" />
+        <Box
+          display="flex"
+          flexDirection="column"
+          left="22%"
+          position="absolute"
+          sx={{ transform: "translateY(-50%)" }}
+          top="50%"
+          width="56%"
         >
-          Project Title
-        </Typography>
-        <Typography
-          sx={{ color: theme.palette.background.default, mb: 4 }}
-          variant="subtitle1"
-        >
-          XX minute read | MM-DD-YYYY
-        </Typography>
-        <Typography
-          sx={{ color: theme.palette.background.default }}
-          variant="body1"
-        >
-          Project description Lorem ipsum dolor sit amet, consectetur adipiscing
-          elit. Suspendisse ac ligula nec eros finibus pretium in non nisl. In
-          sit amet nisl eu metus tempor aliquet.
-        </Typography>
-      </Box>
-    </Box>
+          <Typography
+            sx={{ color: theme.palette.background.default }}
+            variant="h1"
+          >
+            {project?.title}
+          </Typography>
+          <Typography
+            sx={{ color: theme.palette.background.default, mb: 4 }}
+            variant="subtitle1"
+          >
+            {getReadTime(project?.paragraphs)} minute read | {project?.dates}
+          </Typography>
+          <Typography
+            sx={{ color: theme.palette.background.default }}
+            variant="body1"
+          >
+            {project?.description}
+          </Typography>
+        </Box>
+      </CardActionArea>
+    </Card>
   );
 }
 
