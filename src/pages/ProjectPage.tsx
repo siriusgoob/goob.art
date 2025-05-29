@@ -22,7 +22,6 @@ function ProjectPage() {
         navigate("/error");
       }
       setProject(data);
-      console.log(data?.images);
     };
     fetchProject();
   }, [navigate, project, projectId]);

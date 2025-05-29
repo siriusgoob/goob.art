@@ -40,6 +40,20 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+export const getHomePageIntro = async (): Promise<string> => {
+  const introDocRef = doc(db, "misc", "homePage");
+  const docSnap = await getDoc(introDocRef);
+
+  if (docSnap.exists()) {
+    const data = docSnap.data();
+    const intro: string = data.intro;
+    return intro;
+  } else {
+    console.log("Cannot find home page intro document!");
+    return "";
+  }
+};
+
 export const readAboutText = async () => {
   const docRef = doc(db, "about", "text");
   const docSnap = await getDoc(docRef);

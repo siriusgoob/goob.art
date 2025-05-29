@@ -1,11 +1,23 @@
 import { Box, Container, Typography } from "@mui/material";
 import Button from "../components/Button";
 import Copyright from "../components/Copyright";
+import { getHomePageIntro } from "../utils/firebase";
 import backgroundCover from "../assets/images/goob_background.webp";
 import logoGlow from "../assets/images/sg_logo_glow.webp";
 import bluesky from "../assets/images/blusky.svg";
+import { useEffect, useState } from "react";
 
 function HomePage() {
+  const [intro, setIntro] = useState<string>();
+
+  useEffect(() => {
+    const fetchIntro = async () => {
+      const data = await getHomePageIntro();
+      setIntro(data);
+    };
+    fetchIntro();
+  }, []);
+
   return (
     <Container
       maxWidth={false}
@@ -31,9 +43,7 @@ function HomePage() {
       >
         <Box component="img" src={logoGlow} width="70%" />
         <Typography sx={{ paddingY: 4, width: "70%" }} variant="body1">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-          ac ligula nec eros finibus pretium in non nisl. In sit amet nisl eu
-          metus tempor.
+          {intro}
         </Typography>
         <Button
           href="https://bsky.app/profile/goob.art"
