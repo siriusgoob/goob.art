@@ -4,6 +4,7 @@ import FeaturedProjectCard from "../components/FeaturedProjectCard";
 import ProjectCard from "../components/ProjectCard";
 import { getAllProjects, type Project } from "../utils/firebase";
 import { useEffect, useState } from "react";
+import { serializeProjects } from "../utils/utils";
 
 function ProjectsPage() {
   const theme = useTheme();
@@ -13,6 +14,7 @@ function ProjectsPage() {
     const fetchProjects = async () => {
       const data = await getAllProjects();
       setProjects(data);
+      localStorage.setItem("Projects", serializeProjects(data));
     };
     fetchProjects();
   }, []);
