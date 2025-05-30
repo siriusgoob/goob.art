@@ -36,7 +36,6 @@ export function NavbarLink({ text, to }: NavbarLinkProps) {
 }
 
 function Navbar() {
-  const theme = useTheme();
   const navigate = useNavigate();
 
   return (
