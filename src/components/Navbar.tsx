@@ -1,5 +1,6 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
+import logo from "../assets/images/logo.svg";
 
 interface NavbarLinkProps {
   text: string;
@@ -57,17 +58,16 @@ function Navbar() {
       <NavbarLink text="Projects" to="/projects" />
       <NavbarLink text="Art" to="/art" />
       <NavbarLink text="About" to="/about" />
-      {/* TODO: add mini logo below */}
       <Box
+        component="img"
+        src={logo}
         height="50px"
         sx={{
-          backgroundColor: theme.palette.primary.main,
-          borderRadius: "100%",
-          boxShadow: `0 0 10px ${theme.palette.text.secondary}`,
           cursor: "pointer",
-          transition: "box-shadow 0.1s ease-in-out",
+          filter: "drop-shadow(0 0 10px rgba(220, 205, 166, 0.5))",
+          transition: "filter 0.1s ease-in-out",
           "&:hover": {
-            boxShadow: `0 0 20px ${theme.palette.text.secondary}`,
+            filter: "drop-shadow(0 0 20px rgba(220, 205, 166, 0.5))",
           },
         }}
         onClick={() => navigate("/")}
