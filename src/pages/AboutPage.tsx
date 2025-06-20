@@ -8,7 +8,7 @@ import Image from "../components/Image.tsx";
 function AboutPage() {
   const theme = useTheme();
   const [paragraphs, setParagraphs] = useState<string[]>([]);
-  const [aboutImage, setAboutImage] = useState<Artwork>(null);
+  const [aboutImage, setAboutImage] = useState<Artwork | null | undefined>();
 
   useEffect(() => {
     const fetchParagraphs = async () => {
@@ -56,7 +56,7 @@ function AboutPage() {
         >
             <Image
                 artwork={aboutImage}
-                key="image"
+                key=0
             />
             
           <Typography
