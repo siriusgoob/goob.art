@@ -2,6 +2,7 @@ import { Box, Container, Typography, useTheme } from "@mui/material";
 import { readAboutText } from "../utils/firebase";
 import { useEffect, useState } from "react";
 import backgroundCover from "../assets/images/goob_background.webp";
+import Image from "../components/Image.tsx";
 
 function AboutPage() {
   const theme = useTheme();
@@ -44,6 +45,16 @@ function AboutPage() {
           justifyContent="center"
           width="70%"
         >
+            <Image
+                alt="Goob Art Logo"
+                src="https://goob.art/assets/images/goob_logo.webp"
+                sx={{
+                    width: "100%",
+                    maxWidth: "400px",
+                    marginBottom: "20px",
+                }}
+            />
+            
           <Typography
             sx={{
               color: theme.palette.text.secondary,
@@ -51,6 +62,8 @@ function AboutPage() {
             }}
             variant="h1"
           >
+             
+              
             About
           </Typography>
           {paragraphs &&
