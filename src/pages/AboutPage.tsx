@@ -8,7 +8,7 @@ import Image from "../components/Image.tsx";
 function AboutPage() {
   const theme = useTheme();
   const [paragraphs, setParagraphs] = useState<string[]>([]);
-  const [aboutImage, setAboutImage] = useState<Artwork>("");
+  const [aboutImage, setAboutImage] = useState<Artwork>(null);
 
   useEffect(() => {
     const fetchParagraphs = async () => {
