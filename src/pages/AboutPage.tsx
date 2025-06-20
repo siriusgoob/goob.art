@@ -46,13 +46,8 @@ function AboutPage() {
           width="70%"
         >
             <Image
-                alt="Goob Art Logo"
-                src="https://goob.art/assets/images/goob_logo.webp"
-                sx={{
-                    width: "100%",
-                    maxWidth: "400px",
-                    marginBottom: "20px",
-                }}
+               src="https://goob.art/images/goob_logo.webp"
+                
             />
             
           <Typography
