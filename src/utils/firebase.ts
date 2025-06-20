@@ -68,6 +68,27 @@ export const readAboutText = async () => {
   }
 };
 
+export const readAboutImage = async () => {
+  
+    const docRef = doc(db, "about", "image");
+    const docSnap = await getDoc(docRef);
+    
+    if (docSnap.exists()) {
+        const data = docSnap.data();
+        const image: Artwork = {
+        description: String(data.description ?? ""),
+        title: String(data.title ?? ""),
+        type: String(data.type ?? ""),
+        url: String(data.url ?? ""),
+        };
+        return image;
+    } else {
+        console.log("Cannot find about image document!");
+        return null;
+    }
+  
+}
+
 export const getAllArtworkTypes = async (): Promise<string[]> => {
   const artworkCollectionRef = collection(db, "artworkTypes");
   try {
