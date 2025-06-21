@@ -56,7 +56,6 @@ function AboutPage() {
         >
             <Image
                 artwork={aboutImage}
-                key=0
             />
             
           <Typography
