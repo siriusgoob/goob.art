@@ -53,11 +53,11 @@ function AboutPage() {
           width="70%"
         >
             <Box
-                border={`1px solid ${theme.palette.text.secondary}`}
                 component="img"
                 height="auto"
                 src={aboutImage}
-                width="100%"
+                max-width="400px"
+                margin-bottom: "2em"
             />
             
           <Typography
