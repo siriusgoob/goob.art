@@ -75,13 +75,8 @@ export const readAboutImage = async () => {
     
     if (docSnap.exists()) {
         const data = docSnap.data();
-        const image: Artwork = {
-        description: String(data.description ?? ""),
-        title: String(data.title ?? ""),
-        type: String(data.type ?? ""),
-        url: String(data.url ?? ""),
-        };
-        return image;
+        const url: string = data.url;
+        return url;
     } else {
         console.log("Cannot find about image document!");
         return null;

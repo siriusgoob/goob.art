@@ -1,14 +1,12 @@
 import { Box, Container, Typography, useTheme } from "@mui/material";
-import { readAboutText } from "../utils/firebase";
-import { Artwork, readAboutImage } from "../utils/firebase";
+import { readAboutText, readAboutImage} from "../utils/firebase";
 import { useEffect, useState } from "react";
 import backgroundCover from "../assets/images/goob_background.webp";
-import Image from "../components/Image.tsx";
 
 function AboutPage() {
   const theme = useTheme();
   const [paragraphs, setParagraphs] = useState<string[]>([]);
-  const [aboutImage, setAboutImage] = useState<Artwork | null | undefined>();
+  const [aboutImage, setAboutImage] = useState<string>("");
 
   useEffect(() => {
     const fetchParagraphs = async () => {
@@ -54,8 +52,12 @@ function AboutPage() {
           justifyContent="center"
           width="70%"
         >
-            <Image
-                artwork={aboutImage}
+            <Box
+                border={`1px solid ${theme.palette.text.secondary}`}
+                component="img"
+                height="auto"
+                src={aboutImage}
+                width="100%"
             />
             
           <Typography
