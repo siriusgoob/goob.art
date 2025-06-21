@@ -79,7 +79,7 @@ export const readAboutImage = async () => {
         return url;
     } else {
         console.log("Cannot find about image document!");
-        return null;
+        return "";
     }
   
 }
