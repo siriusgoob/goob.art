@@ -56,10 +56,13 @@ function AboutPage() {
                 component="img"
                 height="auto"
                 src={aboutImage}
-                width="100%"
-                max-width="700px"
-                margin-top="4em"
-                margin-bottom="1em"
+                sx={{
+                    width: "100%",
+                    maxWidth: "700px",
+                    marginTop: "4em",
+                    marginBottom: "1em"
+                }}
+                
             />
             
           <Typography
